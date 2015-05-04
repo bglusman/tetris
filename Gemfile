@@ -2,6 +2,7 @@
 source "https://rubygems.org"
 
 # gem 'shoes'
+gem 'cli-pomodoro'
 gem 'pry'
 
 group :test do
