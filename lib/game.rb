@@ -14,6 +14,7 @@ class Game
   end
 
   def tick
+    board_pieces.reject(&:locked?).map(&:descend)
   end
 
 end

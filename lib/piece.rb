@@ -21,7 +21,12 @@ class Piece
   end
   alias_method  :lock!, :lock
 
-  def position
-    @position
+
+  def descend
+    @position[0] += 1
+  end
+
+  def occupy?(column, row)
+    position[0] == row && position[1] == column #heuristic until bitmask logic done
   end
 end
