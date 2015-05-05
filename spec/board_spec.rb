@@ -6,6 +6,7 @@ describe Board do
   let(:board)  { Board.new }
 
   it "yields all squares in a board if passed all: true option" do
+    pending 'rethinking board role'
     board.display(all: true) { |sq| @x ||= 0; @x += 1 }
     expect(@x).to eq(10*24) #yielded once for each for and column
   end
