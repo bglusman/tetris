@@ -1,8 +1,8 @@
 # A sample Gemfile
 source "https://rubygems.org"
 
-# gem 'shoes'
-gem 'cli-pomodoro'
+gem 'shoes', git: 'git@github.com:/shoes/shoes4.git'
+# gem 'cli-pomodoro'
 gem 'pry'
 
 group :test do

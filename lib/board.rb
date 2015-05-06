@@ -6,7 +6,7 @@ class Board
     @pieces = []
   end
 
-  def add(piece, position: [4,0])
+  def add(piece)
     pieces << piece
   end
 
@@ -18,8 +18,8 @@ class Board
     pieces.find(&:unlocked?)
   end
 
-  def occupied_coordinates
-    return enum_for(:occupied_coordinates) unless block_given?
+  def locked_squares
+    return enum_for(:locked_squares) unless block_given?
     (0...X_DIMENSION).each do |x|
       (0...Y_DIMENSION).each do |y|
         yield [x,y] if get(x,y)
@@ -31,47 +31,44 @@ class Board
     x < X_DIMENSION && x >= 0 && y < Y_DIMENSION && y >= 0
   end
 
-  def other_pieces
-    pieces.reject {|piece| piece == current_piece }
+  def other_pieces(focus_piece = current_piece)
+    pieces.reject {|piece| piece == focus_piece }
   end
 
-  def move(x,y)
-    current_piece.position = new_position(x,y) if allowed_move?(x,y)
+  def move(x,y, piece = current_piece)
+    piece.position = new_position(x,y, piece) if allowed_move?(x,y, piece)
+  rescue
+    require 'pry'; binding.pry
   end
 
-  def rotate
-    current_piece.rotate if allowed_rotate?
+  def rotate(piece = current_piece)
+    piece.rotate if allowed_rotate?
   end
 
-  def unrotate
-    current_piece.unrotate if allowed_unrotate?
+  def unrotate(piece = current_piece)
+    piece.unrotate if allowed_unrotate?
   end
 
-  def new_position(x,y)
-    position = current_piece.position.dup
-    position[0] += x
-    position[1] += y
-    position
+  def new_position(x_diff,y_diff, piece = current_piece)
+    [piece.x + x_diff, piece.y + y_diff]
   end
 
-  def allowed_move?(x,y)
-    legal_piece?(Piece.new(position: new_position(x,y), bitmask: current_piece.bitmask))
+  def allowed_move?(x,y, piece = current_piece)
+    legal_piece?(Piece.new(position: new_position(x,y, piece), bitmask: piece.bitmask))
   end
 
-  def allowed_rotate?
-    new_piece = Piece.new(position: current_piece.position, bitmask: current_piece.bitmask.dup.rotate )
-    # require 'pry'; binding.pry
-    legal_piece?(new_piece)
+  def allowed_rotate?(piece = current_piece)
+    legal_piece?(Piece.new(position: piece.position, bitmask: piece.current_bitmask.rotate ))
   end
 
-  def allowed_unrotate?
-    legal_piece?(Piece.new(position: current_piece.position, bitmask: current_piece.bitmask.dup.unrotate ))
+  def allowed_unrotate?(piece = current_piece)
+    legal_piece?(Piece.new(position: piece.position, bitmask: piece.current_bitmask.unrotate ))
   end
 
   def legal_piece?(piece)
     allowed = true
     piece.occupied_coordinates do |occ_x, occ_y|
-      next unless get(occ_x, occ_y)
+      next unless get(occ_x, occ_y) || !self.class.valid_x_y?(occ_x,occ_y)
       allowed = false
     end
     allowed
