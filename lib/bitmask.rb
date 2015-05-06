@@ -20,8 +20,12 @@ class Bitmask
     self
   end
 
+  def self.valid_mask_x_y?(x,y)
+    x < MASK_SIZE && y < MASK_SIZE && x >= 0 && y >= 0
+  end
+
   def occupy?(x,y)
-    raise OutOfBoundsError if x >= MASK_SIZE || y >= MASK_SIZE
+    raise OutOfBoundsError if !self.class.valid_mask_x_y?(x,y)
     @matrix[x][y]
   end
 

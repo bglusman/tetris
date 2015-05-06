@@ -1,5 +1,6 @@
 class Board
-
+  X_DIMENSION = 10
+  Y_DIMENSION = 24
   attr_reader :pieces
   def initialize
     @pieces = []
@@ -9,12 +10,25 @@ class Board
     pieces << piece
   end
 
-  def get(column, row)
-    other_pieces.find {|piece| piece.occupy?(column, row) }
+  def get(x, y)
+    other_pieces.find {|piece| piece.occupy?(x, y) }
   end
 
   def current_piece
     pieces.find(&:unlocked?)
+  end
+
+  def occupied_coordinates
+    return enum_for(:occupied_coordinates) unless block_given?
+    (0...X_DIMENSION).each do |x|
+      (0...Y_DIMENSION).each do |y|
+        yield [x,y] if get(x,y)
+      end
+    end
+  end
+
+  def self.valid_x_y?(x,y)
+    x < X_DIMENSION && x >= 0 && y < Y_DIMENSION && y >= 0
   end
 
   def other_pieces

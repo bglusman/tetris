@@ -37,14 +37,18 @@ class Piece
     return enum_for(:occupied_coordinates) unless block_given?
     ((position[0] - 2)...(position[0] + 2)).each do |x|
       ((position[1] - 2)...(position[1] + 2)).each do |y|
-        yield [x,y] if occupy?(x,y)
+        yield [x,y] if bitmask.occupy?(x - position[0] + ORIGIN_X, y - position[1] + ORIGIN_Y) && Board.valid_x_y?(x,y)
       end
     end
   end
 
   def occupy?(x, y)
-    if (position[0] - x).abs < Bitmask::MASK_SIZE && (position[1] - y).abs < Bitmask::MASK_SIZE
-      bitmask.occupy?(x - position[0] + ORIGIN_X, y - position[1] + ORIGIN_Y)
+    mask_x = x - position[0] + ORIGIN_X
+    mask_y = y - position[1] + ORIGIN_Y
+    if !Board.valid_x_y?(x,y)
+      true #shortcut to avoid testing out of bounds squares
+    elsif Bitmask.valid_mask_x_y?(mask_x,mask_y)
+      bitmask.occupy?(mask_x, mask_y)
     end
   end
 end
