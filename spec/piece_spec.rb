@@ -1,8 +1,9 @@
 require 'spec_helper'
 require_relative '../lib/piece'
+require_relative '../lib/bitmask'
 describe Piece do
 
-  let(:piece)  { Piece.new(bitmask: 'fakeBitmask') }
+  let(:piece)  { Piece.new(bitmask: Bitmask.new([])) }
 
   it "knows its position" do
     expect(piece.position).to be_truthy

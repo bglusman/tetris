@@ -2,8 +2,9 @@ require 'spec_helper'
 require_relative '../lib/game'
 require_relative '../lib/board'
 describe Game do
+  let(:starting_squares) { 5 }
   let(:game)  { Game.new }
-  let(:game2) { Game.new(8) }
+  let(:seeded_game) { Game.new(starting_squares) }
 
   it 'ticks frames which move unlocked pieces' do
     old_position = game.board_pieces.first.position.dup
@@ -12,15 +13,15 @@ describe Game do
   end
 
   it "allows starting random starting pieces at bottom" do
-    expect(game2.board.pieces.count).to eq(9) #8 above plus starting drop piece
+    expect(seeded_game.board.pieces.count).to eq(starting_squares + 1)
   end
 
   it "starts random locked pieces in legal positions within the board" do
-    expect(game2.board.locked_squares.to_a.count).to eq(4 * 8)
+    expect(seeded_game.board.locked_squares.to_a.count).to eq(4 * starting_squares)
   end
 
   it "moves random pieces to bottom of the board" do
-    bottom_pieces = (0...Board::X_DIMENSION).map {|x| game2.board.get(x, Board::Y_DIMENSION - 1) }.compact
+    bottom_pieces = (0...Board::X_DIMENSION).map {|x| seeded_game.board.get(x, Board::Y_DIMENSION - 1) }.compact
     expect(bottom_pieces).not_to be_empty
   end
 

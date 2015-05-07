@@ -28,7 +28,7 @@ class Board
   end
 
   def self.valid_x_y?(x,y)
-    x < X_DIMENSION && x >= 0 && y < Y_DIMENSION && y >= 0
+    x  < X_DIMENSION  && x >= 0 && y  < Y_DIMENSION  && y >= 0
   end
 
   def other_pieces(focus_piece = current_piece)
@@ -36,9 +36,7 @@ class Board
   end
 
   def move(x,y, piece = current_piece)
-    piece.position = new_position(x,y, piece) if allowed_move?(x,y, piece)
-  rescue
-    require 'pry'; binding.pry
+    piece.position = new_position(x,y, piece) if allowed_move?(x,y, piece) && piece.unlocked?
   end
 
   def rotate(piece = current_piece)

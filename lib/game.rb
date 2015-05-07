@@ -1,20 +1,19 @@
 require 'board'
 require 'piece'
 require 'bitmask'
-# require 'forwardable'
 class Game
-  # extend Forwardable
-  # def_delegators :board, :rotate, :unrotate
   attr_reader :board, :time
   def initialize(initial_locked_pieces=0)
     @board = Board.new
     @time  = 0
     initial_locked_pieces.times do
-      piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample), position:[(rand*10).floor,17 + (rand*4).floor ], locked:true)
+      piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample), position:[(rand*10).floor,17 + (rand*4).floor ])
 
       if board.legal_piece?(piece)
         board.add(piece)
-        4.times { board.move(0, 1, piece) }
+        old_pos = piece.current_position
+        5.times { board.move(0, 1, piece) }
+        piece.lock!
       else
         redo
       end
@@ -28,9 +27,9 @@ class Game
 
   def move(direction)
     case direction
-    when :left then board.move(x-1,y)
-    when :right then board.move(x+1,y)
-    when :down then board.move(x,y+1) #or implement drop feature?
+    when :left then board.move(-1,0)
+    when :right then board.move(1,0)
+    when :down then board.move(0,1) #or implement drop feature?
     when :rotate then board.rotate
     end
   end
@@ -44,7 +43,7 @@ class Game
   end
 
   def tick
-    board_pieces.reject(&:locked?).map(&:descend)
+    move(:down)
   end
 
   def initial_bitmasks
