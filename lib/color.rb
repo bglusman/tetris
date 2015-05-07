@@ -8,6 +8,6 @@ class Color
   end
 
   def hex
-    "0x#{red.to_s(16)}#{green.to_s(16)}#{blue.to_s(16)}"
+    "0x%02x%02x%02x" % [red, green, blue]
   end
 end

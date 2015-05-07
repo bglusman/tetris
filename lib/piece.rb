@@ -4,14 +4,19 @@ class Piece
   extend Forwardable
   ORIGIN_X = 2
   ORIGIN_Y = 2
+  NUM_COLORS = 20
   attr_reader :position, :color, :bitmask, :locked
   def_delegators :bitmask, :rotate, :unrotate
 
-  def initialize(bitmask:, position: [5,0], locked: false, color: Color.new)
+  def initialize(bitmask:, position: [5,0], locked: false, color: nil)
     @bitmask  = bitmask
     @locked   = locked
     @position = position
-    @color    = color
+    @color    = color || self.class.palette.sample
+  end
+
+  def self.palette
+    @colors ||= (1..NUM_COLORS).map { Color.new }
   end
 
   def x
