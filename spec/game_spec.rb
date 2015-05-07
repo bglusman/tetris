@@ -26,4 +26,11 @@ describe Game do
     expect(bottom_pieces).not_to be_empty
   end
 
+  it "fails to move piece when would move off board" do
+    4.times { game.move(:right) }
+    pos = game.board.current_piece.current_position
+    game.move(:right)
+    expect(game.board.current_piece.current_position).to eq(pos)
+  end
+
 end

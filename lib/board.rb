@@ -36,7 +36,10 @@ class Board
   end
 
   def move(x,y, piece = current_piece)
-    piece.position = new_position(x,y, piece) if allowed_move?(x,y, piece) && piece.unlocked?
+    if allowed_move?(x,y, piece) && piece.unlocked? &&
+        legal_piece?(Piece.new(position: new_position(x,y, piece), bitmask: piece.current_bitmask ))
+      piece.position = new_position(x,y, piece)
+    end
   end
 
   def rotate(piece = current_piece)
@@ -66,7 +69,8 @@ class Board
   def legal_piece?(piece)
     allowed = true
     piece.occupied_coordinates do |occ_x, occ_y|
-      next unless get(occ_x, occ_y) || !self.class.valid_x_y?(occ_x,occ_y)
+      invalid = get(occ_x, occ_y) || !self.class.valid_x_y?(occ_x,occ_y) || !piece.legal_move?([occ_x, occ_y])
+      next unless invalid
       allowed = false
     end
     allowed

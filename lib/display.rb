@@ -6,8 +6,8 @@ else
   BLOCK_WIDTH = 25
   BLOCK_HEIGHT = 25
   Shoes.app(title: 'Tetris',
-            width: (Board::X_DIMENSION + 1) * BLOCK_WIDTH,
-            height: (Board::Y_DIMENSION + 1) * BLOCK_HEIGHT) do
+            width: (Board::X_DIMENSION ) * BLOCK_WIDTH,
+            height: (Board::Y_DIMENSION ) * BLOCK_HEIGHT) do
     start_pieces = 3
     seconds_per_tick = 0.5
     game = Game.new(start_pieces)

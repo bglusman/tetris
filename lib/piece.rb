@@ -68,7 +68,7 @@ class Piece
     return enum_for(:occupied_coordinates) unless block_given?
     ((x - 2)...(x + 2)).each do |x1|
       ((y - 2)...(y + 2)).each do |y1|
-        yield [x1,y1] if bitmask.occupy?(x1 - x + ORIGIN_X, y1 - y + ORIGIN_Y) && Board.valid_x_y?(x1,y1)
+        yield [x1,y1] if bitmask.occupy?(x1 - x + ORIGIN_X, y1 - y + ORIGIN_Y)
       end
     end
   end
