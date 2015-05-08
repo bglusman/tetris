@@ -2,10 +2,11 @@ require 'board'
 require 'piece'
 require 'bitmask'
 class Game
-  attr_reader :board, :time
+  attr_reader :board, :time, :next_piece
   def initialize(initial_locked_pieces=0)
     @board = Board.new
     @time  = 0
+    @next_piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample))
     initial_locked_pieces.times do
       piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample), position:[(rand*10).floor,17 + (rand*4).floor ])
 
@@ -47,14 +48,21 @@ class Game
   end
 
   def tick
+    old_pos = board.current_piece.current_position
     move(:down)
+    board.current_piece.lock! if old_pos == board.current_piece.current_position
+    unless board.current_piece
+      board.add(next_piece)
+      @next_piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample))
+    end
+
   end
 
   def initial_bitmasks
     #hardcoding starting bitmask coordinates
     {
-      line:      [[2,0],[2,1],[2,2],[2,3]],
-      block:     [[2,2],[2,3],[3,2],[3,3]],
+      line:      [[2,1],[2,2],[2,3],[2,4]],
+      block:     [[1,1],[1,2],[2,1],[2,2]],
       el_shape:  [[2,1],[2,2],[2,3],[3,3]],
       reverse_el:[[2,1],[2,2],[2,3],[3,1]],
       t_shape:   [[2,1],[1,2],[2,2],[3,2]],

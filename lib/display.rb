@@ -8,7 +8,7 @@ else
   Shoes.app(title: 'Tetris',
             width: (Board::X_DIMENSION ) * BLOCK_WIDTH,
             height: (Board::Y_DIMENSION ) * BLOCK_HEIGHT) do
-    start_pieces = 3
+    start_pieces = 0
     seconds_per_tick = 0.5
     game = Game.new(start_pieces)
     alert game.board.locked_squares.to_a.count.to_s

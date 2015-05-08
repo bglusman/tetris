@@ -8,7 +8,7 @@ class Piece
   attr_reader :position, :color, :bitmask, :locked
   def_delegators :bitmask, :rotate, :unrotate
 
-  def initialize(bitmask:, position: [5,0], locked: false, color: nil)
+  def initialize(bitmask:, position: [5,3], locked: false, color: nil)
     @bitmask  = bitmask
     @locked   = locked
     @position = position
@@ -78,7 +78,7 @@ class Piece
     mask_y = y - position[1] + ORIGIN_Y
     if !Board.valid_x_y?(x,y)
       true #shortcut to avoid testing out of bounds squares
-    elsif Bitmask.valid_mask_x_y?(mask_x,mask_y)
+    elsif Bitmask.valid_mask_x_y?(mask_x,mask_y, bitmask.mask_size)
       bitmask.occupy?(mask_x, mask_y)
     end
   end
