@@ -1,13 +1,15 @@
 class Bitmask
   OutOfBoundsError = Class.new(StandardError)
-  require 'matrix'
   attr_reader :matrix, :mask_size
   def initialize(pairs, mask_size=4)
+    # binding.pry if mask_size == 3
     @matrix = (0...mask_size).map { (0...mask_size).map { nil } }
     @mask_size = mask_size
     pairs.each do |(x,y)|
       @matrix[x][y] = true
     end
+  rescue => e
+    binding.pry
   end
 
   def rotate
@@ -25,8 +27,10 @@ class Bitmask
   end
 
   def occupy?(x,y)
-    raise OutOfBoundsError if !self.class.valid_mask_x_y?(x,y, mask_size)
+    # raise OutOfBoundsError if !self.class.valid_mask_x_y?(x,y, mask_size)
     @matrix[x][y]
+  rescue NoMethodError
+    false
   end
 
   def ==(other)

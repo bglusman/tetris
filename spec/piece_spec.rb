@@ -3,7 +3,7 @@ require_relative '../lib/piece'
 require_relative '../lib/bitmask'
 describe Piece do
 
-  let(:piece)  { Piece.new(bitmask: Bitmask.new([])) }
+  let(:piece)  { Piece.new(bitmask: Bitmask.new([[0,0]],1)) }
 
   it "knows its position" do
     expect(piece.position).to be_truthy

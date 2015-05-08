@@ -6,9 +6,9 @@ class Game
   def initialize(initial_locked_pieces=0)
     @board = Board.new
     @time  = 0
-    @next_piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample))
+    @next_piece = Piece.new(bitmask: Bitmask.new(*random_bitmask))
     initial_locked_pieces.times do
-      piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample), position:[(rand*10).floor,17 + (rand*4).floor ])
+      piece = Piece.new(bitmask: Bitmask.new(*random_bitmask), position:[(rand*10).floor,17 + (rand*4).floor ])
 
       if board.legal_piece?(piece)
         board.add(piece)
@@ -23,7 +23,7 @@ class Game
         redo
       end
     end
-    board.add(Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample)))
+    board.add(Piece.new(bitmask: Bitmask.new(*random_bitmask)))
   end
 
   def board_pieces
@@ -51,24 +51,43 @@ class Game
     old_pos = board.current_piece.current_position
     move(:down)
     board.current_piece.lock! if old_pos == board.current_piece.current_position
+
     unless board.current_piece
+      remove_complete_rows
       board.add(next_piece)
-      @next_piece = Piece.new(bitmask: Bitmask.new(initial_bitmasks.values.sample))
+      @next_piece = Piece.new(bitmask: Bitmask.new(*random_bitmask))
     end
 
+  end
+
+  def remove_complete_rows
+   (Board::Y_DIMENSION - 1).downto(3) do |y|
+      row_gap = (0...Board::X_DIMENSION).find {|x| !board.get(x,y)}
+      # alert "ROW GAP in #{y}? : #{row_gap}"
+      next if row_gap
+      delete_row(y)
+    end
+  end
+
+  def delete_row(y_index)
+    alert "DELETING ROW #{y_index}"
   end
 
   def initial_bitmasks
     #hardcoding starting bitmask coordinates
     {
-      line:      [[2,1],[2,2],[2,3],[2,4]],
-      block:     [[1,1],[1,2],[2,1],[2,2]],
-      el_shape:  [[2,1],[2,2],[2,3],[3,3]],
-      reverse_el:[[2,1],[2,2],[2,3],[3,1]],
-      t_shape:   [[2,1],[1,2],[2,2],[3,2]],
-      s_shape:   [[1,2],[2,2],[2,1],[3,1]],
-      z_shape:   [[1,1],[2,1],[2,2],[3,2]],
+      line:      [[[2,0],[2,1],[2,2],[2,3]], 4],
+      block:     [[[1,1],[1,2],[2,1],[2,2]], 4],
+      el_shape:  [[[1,0],[1,1],[1,2],[2,2]], 3],
+      reverse_el:[[[1,0],[1,1],[1,2],[2,0]], 3],
+      t_shape:   [[[1,0],[0,1],[1,1],[2,1]], 3],
+      s_shape:   [[[0,1],[1,1],[1,0],[2,0]], 3],
+      z_shape:   [[[0,0],[1,0],[1,1],[2,1]], 3]
     }
+  end
+
+  def random_bitmask
+    initial_bitmasks.values.sample
   end
 
 end
