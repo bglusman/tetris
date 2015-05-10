@@ -69,7 +69,7 @@ class Board
   def legal_piece?(piece)
     allowed = true
     piece.occupied_coordinates do |occ_x, occ_y|
-      invalid = get(occ_x, occ_y) || !self.class.valid_x_y?(occ_x,occ_y) || !piece.legal_move?([occ_x, occ_y])
+      invalid = get(occ_x, occ_y) || !self.class.valid_x_y?(occ_x,occ_y)
       next unless invalid
       allowed = false
     end
