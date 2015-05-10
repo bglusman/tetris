@@ -19,13 +19,13 @@ describe Piece do
   end
 
   it "allows setting position" do
-    new_position = [1,2]
+    new_position = [3,4]
     piece.position = new_position
     expect(piece.position).to eq(new_position)
   end
 
   it "does not update position if locked" do
-    new_position = [1,2]
+    new_position = [3,4]
     piece.lock!
     piece.position = new_position
     expect(piece.position).not_to eq(new_position)

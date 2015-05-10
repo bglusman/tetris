@@ -4,7 +4,7 @@ require_relative '../lib/piece'
 describe Board do
 
   let(:board)  { Board.new }
-  let(:block_mask) { [[[1,1],[1,2],[2,1],[1,1]],4] }
+  let(:block_mask) { [[[1,1],[1,2],[2,1],[2,2]],4] }
   let(:el_mask)    { [[[1,0],[1,1],[1,2],[2,2]],3] }
 
   it 'allows adding a new piece to the board, and retains position of piece' do

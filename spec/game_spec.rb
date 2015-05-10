@@ -17,7 +17,6 @@ describe Game do
   end
 
   it "starts random locked pieces in legal positions within the board" do
-    binding.pry
     expect(seeded_game.board.locked_squares.to_a.count).to eq(4 * starting_squares)
   end
 
