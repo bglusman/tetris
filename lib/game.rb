@@ -3,7 +3,7 @@ require 'piece'
 require 'bitmask'
 class Game
   attr_reader :board, :time, :next_piece
-  def initialize(initial_locked_pieces=0)
+  def initialize(initial_locked_pieces=0, first_piece = nil)
     @board = Board.new
     @time  = 0
     @next_piece = Piece.new(bitmask: Bitmask.new(*random_bitmask))
@@ -23,7 +23,8 @@ class Game
         redo
       end
     end
-    board.add(Piece.new(bitmask: Bitmask.new(*random_bitmask)))
+    first_piece ||= Piece.new(bitmask: Bitmask.new(*random_bitmask))
+    board.add(first_piece)
   end
 
   def board_pieces

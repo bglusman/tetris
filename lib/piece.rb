@@ -8,7 +8,7 @@ class Piece
   attr_reader :position, :color, :bitmask, :locked
   def_delegators :bitmask, :rotate, :unrotate
 
-  def initialize(opts={bitmask:nil, position: [5,3], locked: false, color: nil})
+  def initialize(opts={bitmask:nil, position: nil, locked: false, color: nil})
     @bitmask  = opts[:bitmask]
     @locked   = opts[:locked]
     @position = opts[:position] || [5,3]

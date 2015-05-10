@@ -3,7 +3,8 @@ require_relative '../lib/game'
 require_relative '../lib/board'
 describe Game do
   let(:starting_squares) { 5 }
-  let(:game)  { Game.new }
+  let(:block_mask) { [[[1,1],[1,2],[2,1],[2,2]],4] }
+  let(:game)  { Game.new(0, Piece.new(bitmask: Bitmask.new(*block_mask))) }
   let(:seeded_game) { Game.new(starting_squares) }
 
   it 'ticks frames which move unlocked pieces' do
@@ -30,6 +31,15 @@ describe Game do
     pos = game.board.current_piece.current_position
     game.move(:right)
     expect(game.board.current_piece.current_position).to eq(pos)
+  end
+
+  it "succeeds in moving piece when not off board" do
+    initial_pos = game.board.current_piece.current_position
+    3.times { game.move(:left) }
+    expect(game.board.current_piece.current_position).not_to eq(initial_pos)
+    pos = game.board.current_piece.current_position
+    game.move(:left)
+    expect(game.board.current_piece.current_position).not_to eq(pos)
   end
 
 end
