@@ -61,6 +61,10 @@ describe Game do
   end
 
   it 'moves remaining squares down one row when deleting a row' do
+    expect(complete_row_game.board.locked_squares.to_a).to include([0, 24])
+    expect(complete_row_game.board.locked_squares.to_a).to include([1, 24])
+    expect(complete_row_game.board.locked_squares.to_a).to include([0, 25])
+    expect(complete_row_game.board.locked_squares.to_a).to include([1, 25])
     complete_row_game.remove_complete_rows
     expect(complete_row_game.board.locked_squares.to_a).to include([0, 25])
     expect(complete_row_game.board.locked_squares.to_a).to include([1, 25])
