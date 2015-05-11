@@ -5,7 +5,7 @@ class Piece
   ORIGIN_X = 2
   ORIGIN_Y = 2
   NUM_COLORS = 20
-  attr_reader :position, :color, :bitmask, :locked
+  attr_reader :position, :color, :bitmask, :locked, :shape
   def_delegators :bitmask, :rotate, :unrotate
 
   def self.initial_bitmasks
@@ -22,8 +22,9 @@ class Piece
   end
 
 
-  def initialize(opts={bitmask:nil, position: nil, locked: false, color: nil})
-    @bitmask  = opts[:bitmask]
+  def initialize(opts={bitmask:nil, shape: nil, position: nil, locked: false, color: nil})
+    @shape    = opts[:shape]    || opts[:bitmask] ? nil : self.class.initial_bitmasks.keys.sample
+    @bitmask  = opts[:bitmask]  || Bitmask.new(*self.class.initial_bitmasks[@shape])
     @locked   = opts[:locked]
     @position = opts[:position] || [5,3]
     @color    = opts[:color] || self.class.palette.sample

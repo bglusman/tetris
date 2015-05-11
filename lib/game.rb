@@ -6,9 +6,9 @@ class Game
   def initialize(initial_locked_pieces=0, first_piece = nil)
     @board = Board.new
     @time  = 0
-    @next_piece = Piece.new(bitmask: Bitmask.new(*random_bitmask))
+    @next_piece = Piece.new
     initial_locked_pieces.times do
-      piece = Piece.new(bitmask: Bitmask.new(*random_bitmask), position:[(rand*10).floor,17 + (rand*4).floor ])
+      piece = Piece.new(position:[(rand*10).floor,17 + (rand*4).floor ])
 
       if board.legal_piece?(piece)
         board.add(piece)
@@ -23,7 +23,7 @@ class Game
         redo
       end
     end
-    first_piece ||= Piece.new(bitmask: Bitmask.new(*random_bitmask))
+    first_piece ||= Piece.new
     board.add(first_piece)
   end
 
@@ -56,7 +56,7 @@ class Game
     unless board.current_piece
       remove_complete_rows
       board.add(next_piece)
-      @next_piece = Piece.new(bitmask: Bitmask.new(*random_bitmask))
+      @next_piece = Piece.new
     end
 
   end
