@@ -31,6 +31,10 @@ class Piece
     @position = new_position if unlocked? && legal_move?(new_position)
   end
 
+  def position!(new_position)
+    @position = new_position
+  end
+
   def current_bitmask
     bitmask.dup
   end

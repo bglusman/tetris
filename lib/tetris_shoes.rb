@@ -6,7 +6,16 @@ Shoes.app(title: 'Tetris',
           height: (Board::Y_DIMENSION ) * BLOCK_HEIGHT) do
   start_pieces = 0
   seconds_per_tick = 0.5
-  game = Game.new(start_pieces)
+  # game = Game.new(start_pieces)
+  game = Game.new
+  line1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [8,26], locked: true)
+  line2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [4,26], locked: true)
+  block = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+
+  game.board.add(line1); game.board.add(line2); game.board.add(block)
+
+  game
+
   alert game.board.locked_squares.to_a.count.to_s
   keypress do |k|
     case k

@@ -72,7 +72,13 @@ class Game
   end
 
   def delete_row(y_index)
-    puts "deleting row #{y_index}"
+    board.other_pieces.select do |piece|
+      if piece.occupied_coordinates.any? {|(x,y)| y <= y_index }
+        new_position = piece.current_position
+        new_position[1] += 1
+        piece.position!(new_position)
+      end
+    end
     self
   end
 

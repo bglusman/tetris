@@ -62,10 +62,10 @@ describe Game do
 
   it 'moves remaining squares down one row when deleting a row' do
     complete_row_game.remove_complete_rows
-    expect(complete_row_game.board.get(0,26)).to be_truthy
-    expect(complete_row_game.board.get(1,26)).to be_truthy
-    expect(complete_row_game.board.get(0,25)).to be_falsy
-    expect(complete_row_game.board.get(1,25)).to be_falsy
+    expect(complete_row_game.board.locked_squares.to_a).to include([0, 25])
+    expect(complete_row_game.board.locked_squares.to_a).to include([1, 25])
+    expect(complete_row_game.board.locked_squares.to_a).not_to include([0, 26])
+    expect(complete_row_game.board.locked_squares.to_a).not_to include([1, 26])
   end
 
 end
