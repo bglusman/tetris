@@ -62,13 +62,14 @@ class Game
   end
 
   def remove_complete_rows
-   full_rows = (Board::Y_DIMENSION - 1).downto(3).map do |y|
+   full_row = (Board::Y_DIMENSION - 1).downto(3).find do |y|
       row_gap = (0...Board::X_DIMENSION).find {|x| !board.get(x,y)}
       # alert "ROW GAP in #{y}? : #{row_gap}"
       next if row_gap
       delete_row(y)
+      y
     end
-    full_rows.compact
+    remove_complete_rows if full_row
   end
 
   def delete_row(y_index)

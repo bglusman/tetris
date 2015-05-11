@@ -8,11 +8,18 @@ Shoes.app(title: 'Tetris',
   seconds_per_tick = 0.5
   # game = Game.new(start_pieces)
   game = Game.new
-  line1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [8,26], locked: true)
-  line2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [4,26], locked: true)
-  block = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+  block1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+  block2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [3,25], locked: true)
+  block3 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [5,25], locked: true)
+  block4 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [7,25], locked: true)
+  block5 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [9,25], locked: true)
+  block1a = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,23], locked: true)
+  block2a = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [3,23], locked: true)
+  block3a = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [5,23], locked: true)
+  block4a = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [7,23], locked: true)
+  block5a = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [9,23], locked: true)
 
-  game.board.add(line1); game.board.add(line2); game.board.add(block)
+  [block1 ,block2 ,block3 ,block4 ,block5 ,block1a,block2a,block3a,block4a,block5a].each {|blk| game.board.add(blk)}
 
   game
 
