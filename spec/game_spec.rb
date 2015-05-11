@@ -6,6 +6,14 @@ describe Game do
   let(:block_mask) { [[[1,1],[1,2],[2,1],[2,2]],4] }
   let(:game)  { Game.new(0, Piece.new(bitmask: Bitmask.new(*block_mask))) }
   let(:seeded_game) { Game.new(starting_squares) }
+  let(:complete_row_game) do
+    game = Game.new
+    line1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [8,26], locked: true)
+    line2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [4,26], locked: true)
+    block = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+    game.board.add(line1); game.board.add(line2); game.board.add(block)
+    game
+  end
 
   it 'ticks frames which move unlocked pieces' do
     old_position = game.board_pieces.first.position.dup
@@ -40,6 +48,24 @@ describe Game do
     pos = game.board.current_piece.current_position
     game.move(:left)
     expect(game.board.current_piece.current_position).not_to eq(pos)
+  end
+
+  it 'deletes a row when the row is complete' do
+    expect(complete_row_game.remove_complete_rows).not_to be_empty
+  end
+
+  it 'removes the number of squares in a row when deleting a row' do
+    expect(complete_row_game.board.locked_squares.to_a.count).to eq(3 * 4) #3 pieces, 4 tiles each
+    complete_row_game.remove_complete_rows
+    expect(complete_row_game.board.locked_squares.to_a.count).to eq((3 * 4) - 10) #10 tiles in a row
+  end
+
+  it 'moves remaining squares down one row when deleting a row' do
+    complete_row_game.remove_complete_rows
+    expect(complete_row_game.board.get(0,26)).to be_truthy
+    expect(complete_row_game.board.get(1,26)).to be_truthy
+    expect(complete_row_game.board.get(0,25)).to be_falsy
+    expect(complete_row_game.board.get(1,25)).to be_falsy
   end
 
 end
