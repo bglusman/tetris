@@ -9,12 +9,33 @@ div.gameSquare {
   float: left;
   width: 15px;
   height: 15px;
+  margin-right: 2px;
 }
 
-div.gameSquare.present {
-  background-color: black;
+div.gameSquare.line {
+  background-color: red;
 }
 
-div.gameSquare.absent {
-  background-color: white;
+div.gameSquare.block {
+  background-color: orange;
+}
+
+div.gameSquare.el_shape {
+  background-color: yellow;
+}
+
+div.gameSquare.j_shape {
+  background-color: blue;
+}
+
+div.gameSquare.t_shape {
+  background-color: green;
+}
+
+div.gameSquare.s_shape {
+  background-color: indigo;
+}
+
+div.gameSquare.z_shape {
+  background-color: violet;
 }

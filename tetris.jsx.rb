@@ -17,10 +17,9 @@ class Tetris
           columns.times do |column|
             piece = game.board.get(column, row)
             piece ||= game.board.current_piece.occupy?(column, row) ? game.board.current_piece : nil
-            color = piece.color if piece
-            color_string = color ? "rgb(#{color.red},#{color.green},#{color.blue})" : "white"
+            color, shape = piece.color, piece.shape if piece
             presence = color ? 'present' : 'absent'
-            div(className: "gameSquare #{presence}", data: ["row-num: #{row}", "col-num: #{col}"], style: {'backgroundColor' => color_string } )
+            div(className: "gameSquare #{presence} #{shape}", data: ["row-num: #{row}", "col-num: #{col}"] )
           end
         end
       end
