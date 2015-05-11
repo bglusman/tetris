@@ -10,3 +10,11 @@ div.gameSquare {
   width: 15px;
   height: 15px;
 }
+
+div.gameSquare.present {
+  background-color: black;
+}
+
+div.gameSquare.absent {
+  background-color: white;
+}

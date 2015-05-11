@@ -18,11 +18,9 @@ class Tetris
             piece = game.board.get(column, row)
             piece ||= game.board.current_piece.occupy?(column, row) ? game.board.current_piece : nil
             color = piece.color if piece
-            puts "piece: #{piece}, color: #{color}"
             color_string = color ? "rgb(#{color.red},#{color.green},#{color.blue})" : "white"
-            div(className: 'gameSquare', data: ["row-num: #{row}", "col-num: #{col}"], style: {'backgroundColor' => color_string } ) do
-              color ? "x" : " "
-            end
+            presence = color ? 'present' : 'absent'
+            div(className: "gameSquare #{presence}", data: ["row-num: #{row}", "col-num: #{col}"], style: {'backgroundColor' => color_string } )
           end
         end
       end
@@ -37,15 +35,29 @@ seconds_per_tick = 0.5
 start_pieces = 0
 game = Game.new(start_pieces)
 
+
+KEY_ENTER = 13
+
+def handle_keydown(event)
+  if Native(event).key_code == KEY_ENTER
+    puts "hit enter"
+  else
+    puts "hit other key"
+  end
+end
+
+puts 'setup native click'
+Native(`window`).on(:key_down) { |e| puts "e:#{e}"; handle_keydown(e) }
+
 $window.every(0.05) do
-  puts "main loop now at #{Time.now}"
   if Time.now - last > seconds_per_tick
-    puts "tick now x:#{game.board.current_piece.x}, x:#{game.board.current_piece.y}"
     game.tick
     last = Time.now
   end
 
-  element = `<Tetris game={#{game}}/>`
   container = `document.getElementById('container')`
+
+  element = `<Tetris game={#{game}}/>`
   React.render element, container
+
 end
