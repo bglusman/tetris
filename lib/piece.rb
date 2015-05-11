@@ -8,6 +8,20 @@ class Piece
   attr_reader :position, :color, :bitmask, :locked
   def_delegators :bitmask, :rotate, :unrotate
 
+  def self.initial_bitmasks
+    #hardcoding starting bitmask coordinates
+    {
+      line:      [[[2,0],[2,1],[2,2],[2,3]], 4],
+      block:     [[[1,1],[1,2],[2,1],[2,2]], 4],
+      el_shape:  [[[1,0],[1,1],[1,2],[2,2]], 3],
+      j_shape:   [[[1,0],[1,1],[1,2],[2,0]], 3],
+      t_shape:   [[[1,0],[0,1],[1,1],[2,1]], 3],
+      s_shape:   [[[0,1],[1,1],[1,0],[2,0]], 3],
+      z_shape:   [[[0,0],[1,0],[1,1],[2,1]], 3]
+    }
+  end
+
+
   def initialize(opts={bitmask:nil, position: nil, locked: false, color: nil})
     @bitmask  = opts[:bitmask]
     @locked   = opts[:locked]

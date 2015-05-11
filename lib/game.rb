@@ -83,21 +83,8 @@ class Game
     self
   end
 
-  def initial_bitmasks
-    #hardcoding starting bitmask coordinates
-    {
-      line:      [[[2,0],[2,1],[2,2],[2,3]], 4],
-      block:     [[[1,1],[1,2],[2,1],[2,2]], 4],
-      el_shape:  [[[1,0],[1,1],[1,2],[2,2]], 3],
-      reverse_el:[[[1,0],[1,1],[1,2],[2,0]], 3],
-      t_shape:   [[[1,0],[0,1],[1,1],[2,1]], 3],
-      s_shape:   [[[0,1],[1,1],[1,0],[2,0]], 3],
-      z_shape:   [[[0,0],[1,0],[1,1],[2,1]], 3]
-    }
-  end
-
   def random_bitmask
-    initial_bitmasks.values.sample
+    Piece.initial_bitmasks.values.sample
   end
 
 end

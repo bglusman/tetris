@@ -8,20 +8,20 @@ describe Game do
   let(:seeded_game) { Game.new(starting_squares) }
   let(:complete_row_game) do
     game = Game.new
-    line1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [8,26], locked: true)
-    line2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:line]).rotate, position: [4,26], locked: true)
-    block = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+    line1 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:line]).rotate, position: [8,26], locked: true)
+    line2 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:line]).rotate, position: [4,26], locked: true)
+    block = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
     game.board.add(line1); game.board.add(line2); game.board.add(block)
     game
   end
 
   let(:two_rows_game) do
     game = Game.new
-    block1 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
-    block2 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [3,25], locked: true)
-    block3 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [5,25], locked: true)
-    block4 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [7,25], locked: true)
-    block5 = Piece.new(bitmask: Bitmask.new(*game.initial_bitmasks[:block]).rotate, position: [9,25], locked: true)
+    block1 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [1,25], locked: true)
+    block2 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [3,25], locked: true)
+    block3 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [5,25], locked: true)
+    block4 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [7,25], locked: true)
+    block5 = Piece.new(bitmask: Bitmask.new(*Piece.initial_bitmasks[:block]).rotate, position: [9,25], locked: true)
 
     [block1 ,block2 ,block3 ,block4 ,block5].each {|blk| game.board.add(blk)}
 
