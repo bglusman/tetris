@@ -8,8 +8,6 @@ class Bitmask
     pairs.each do |(x,y)|
       @matrix[x][y] = true
     end
-  rescue => e
-    binding.pry
   end
 
   def rotate

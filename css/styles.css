@@ -1,15 +1,18 @@
 html,
 body {
-  margin: 0;
   padding: 0;
-
 }
 
 div.gameSquare {
   float: left;
-  width: 15px;
-  height: 15px;
+  width: 16px;
+  height: 17px;
   margin-right: 2px;
+
+}
+
+div.nextPiecePreview {
+  float: right;
 }
 
 div.gameSquare.line {

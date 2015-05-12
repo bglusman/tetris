@@ -4,22 +4,10 @@ BLOCK_HEIGHT = 25
 Shoes.app(title: 'Tetris',
           width: (Board::X_DIMENSION ) * BLOCK_WIDTH,
           height: (Board::Y_DIMENSION ) * BLOCK_HEIGHT) do
-  start_pieces = 0
+  start_pieces = 5
   seconds_per_tick = 0.5
   # game = Game.new(start_pieces)
-  game = Game.new
-  block1 = Piece.new(shape: :block).rotate, position: [1,25], locked: true)
-  block2 = Piece.new(shape: :block).rotate, position: [3,25], locked: true)
-  block3 = Piece.new(shape: :block).rotate, position: [5,25], locked: true)
-  block4 = Piece.new(shape: :block).rotate, position: [7,25], locked: true)
-  block5 = Piece.new(shape: :block).rotate, position: [9,25], locked: true)
-  block1a = Piece.new(shape: :block).rotate, position: [1,23], locked: true)
-  block2a = Piece.new(shape: :block).rotate, position: [3,23], locked: true)
-  block3a = Piece.new(shape: :block).rotate, position: [5,23], locked: true)
-  block4a = Piece.new(shape: :block).rotate, position: [7,23], locked: true)
-  block5a = Piece.new(shape: :block).rotate, position: [9,23], locked: true)
-
-  [block1 ,block2 ,block3 ,block4 ,block5 ,block1a,block2a,block3a,block4a,block5a].each {|blk| game.board.add(blk)}
+  game = Game.new(start_pieces)
 
   game
 

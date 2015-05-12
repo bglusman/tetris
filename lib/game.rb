@@ -13,10 +13,11 @@ class Game
       if board.legal_piece?(piece)
         board.add(piece)
         old_pos = piece.current_position
-        5.times { board.move(0, 1, piece) }
+        (rand*3).floor.times do
+          board.unrotate(piece)
+        end
+        10.times { board.move(0, 1, piece) }
         legal = board.legal_piece?(piece)
-        puts "not legal #{piece.x},#{piece.y}" if !legal
-        info "not legal  #{piece.x},#{piece.y}" if !legal && respond_to?(:info)
         redo unless legal
         piece.lock!
       else

@@ -1,6 +1,7 @@
 class Board
   X_DIMENSION = 10
   Y_DIMENSION = 26
+  VISIBLE_Y_DIMENSION = 24
   attr_reader :pieces
   def initialize
     @pieces = []
