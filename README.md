@@ -7,3 +7,8 @@ on the desktop, using Ruby's [Shoes](http://shoesrb.com/) project,
 and in the browser, using [Opal.rb](http://opalrb.org/) and [React.js](https://facebook.github.io/react/)
 (via the [React.rb](https://github.com/zetachang/react.rb/) wrapper)
 
+### With Shoes
+![Tetris Shoes](https://github.com/bglusman/tetris/blob/master/Tetris%20Shoes%20Screenshot.png)
+
+### With React
+![Tetris React](https://github.com/bglusman/tetris/blob/master/Tetris%20Browser%20React%20Screenshot.png)
