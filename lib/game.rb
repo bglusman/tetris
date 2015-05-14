@@ -38,6 +38,7 @@ class Game
     when :right then board.move(1,0)
     when :down then board.move(0,1) #or implement drop feature?
     when :rotate then board.rotate
+    when :unrotate then board.unrotate
     end
   end
 

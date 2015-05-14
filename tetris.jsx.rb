@@ -2,6 +2,7 @@ require "opal"
 require "react"
 require "browser"
 require "game"
+require "jquery"
 
 class Tetris
   include React::Component
@@ -44,23 +45,25 @@ end
 React.expose_native_class(Tetris)
 
 last = Time.now
+seconds_per_tick = 0.4
 start_pieces = 0
-seconds_per_tick = 0.1
 game = Game.new(start_pieces)
 
+%x{
+  $(document).on('keydown', function(event){
+      switch (event.keyCode) {
 
-KEY_ENTER = 13
+        case 37: #{game.move(:left)}
+          break;
+        case 38: #{game.move(:unrotate)}
+          break;
+        case 39: #{game.move(:right)}
+          break;
+        case 40: #{game.move(:down)}
+      }
+    })
 
-def handle_keydown(event)
-  if Native(event).key_code == KEY_ENTER
-    puts "hit enter"
-  else
-    puts "hit other key"
-  end
-end
-
-puts 'setup native click'
-Native(`window`).on(:key_down) { |e| puts "e:#{e}"; handle_keydown(e) }
+}
 
 $window.every(0.05) do
   if Time.now - last > seconds_per_tick
