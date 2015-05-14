@@ -28,6 +28,10 @@ class Game
     board.add(first_piece)
   end
 
+  def reset
+    initialize
+  end
+
   def board_pieces
     board.pieces
   end

@@ -11,12 +11,11 @@ Shoes.app(title: 'Tetris',
 
   game
 
-  alert game.board.locked_squares.to_a.count.to_s
   keypress do |k|
     case k
     when :left, :right, :down  then game.move(k)
     when :up     then game.move(:rotate)
-    when :escape then game = Game.new(start_pieces)
+    when :escape then game.reset
     end
   end
 

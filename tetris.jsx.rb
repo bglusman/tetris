@@ -53,6 +53,8 @@ game = Game.new(start_pieces)
   $(document).on('keydown', function(event){
       switch (event.keyCode) {
 
+        case 27: #{game.reset}
+          break;
         case 37: #{game.move(:left)}
           break;
         case 38: #{game.move(:unrotate)}
